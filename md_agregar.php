@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if ($_SESSION['estado']==0) {
+  header("Location:../publicidad/loguin.php");
+}
+?>
 <!-- Modal -->
 	<div class="modal fade" id="inst_Persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -10,9 +16,15 @@
 					<div class="modal-body">
 					<!-- DOCUMENTO -->
 						<div class="form-group">
-							<label class="col-sm-3 control-label">Documento</label>
-							<div class="col-sm-8">
-								<input type="number" class="form-control" placeholder="Ingrese Documento" min=0 name="documento" required>
+							<label class="col-sm-4 control-label" style="margin-left: -0.9cm;">Documento</label>
+							<div class="input-group">
+							  <input type="number" class="form-control" placeholder="Ingrese Documento" min=0 name="documento"  style="margin-right:5cm;" required >
+							  <?php
+								echo '<span class="input-group-addon">
+										<a href="../Crud/verificarDocumento.php?Documento='.documento.'" > 
+										<i class="fa fa-search" aria-hidden="true"></i>
+										</a></span>';
+								?>
 							</div>
 						</div>
 						<!-- NOMBRE -->
@@ -57,7 +69,7 @@
 								<select name="codigoCargo" style="border-radius:5px;width: 370px;height: 33px;border-color:#BDBDBD;border-collapse:  collapse;" required>					
 								 <?php 
 								$jorge=conectar();
-								$registros=$jorge->query("select codigoCargo,NombreCargo from cargo")
+								$registros=$jorge->query("select * from cargo where visibilidad=1")
 								or die($jorge->error);
 								while ($reg=$registros->fetch_array()) {
 								  echo "<option value=\"".$reg['codigoCargo']."\">".$reg['NombreCargo']."</option>";
