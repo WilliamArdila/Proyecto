@@ -8,7 +8,7 @@ $jorge=new mysqli($db_host,$db_user,$db_pass,$db_database);
 if($jorge->connect_error)
 die('Problemas con la conexion a la base de datos');
 
-		$jorge->query("delete from cargo where codigoCargo=$_REQUEST[codigo]")
+		$jorge->query("update cargo set visibilidad=0 where codigoCargo=$_REQUEST[codigo]")
 			or die($jorge->error);
 		$jorge->close();
 		header('Location: Cargo1.php');
